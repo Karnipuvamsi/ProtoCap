@@ -106,6 +106,9 @@ modules:
   # --- Destination content module (subaccount-level) ---
   - name: Protocap-destination-content
     type: com.sap.application.content
+    path: .
+    build-parameters:
+      no-source: true
     requires:
       - name: Protocap-destination
         parameters:
