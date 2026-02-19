@@ -1,7 +1,7 @@
 _schema-version: "3.3"
 ID: Protocap
 version: 1.0.0
-description: "A simple CAP projectt."
+description: "A simple CAP projecttss."
 parameters:
   enable-parallel-deployments: true
 
