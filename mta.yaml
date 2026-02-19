@@ -46,7 +46,7 @@ resources:
       service-plan: application
       path: ./xs-security.json
       config:
-        xsappname: age-role-app-${space}   # ensure uniqueness; adjust as needed
+        xsappname: age-role-app
         tenant-mode: dedicated
         oauth2-configuration:
           credential-types:
