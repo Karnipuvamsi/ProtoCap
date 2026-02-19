@@ -1,15 +1,17 @@
-_schema-version: 3.3.0
+_schema-version: "3.3"
 ID: Protocap
 version: 1.0.0
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
+
 build-parameters:
   before-all:
     - builder: custom
       commands:
         - npm ci
         - npx cds build --production
+
 modules:
   - name: Protocap-srv
     type: nodejs
@@ -20,7 +22,7 @@ modules:
     build-parameters:
       builder: npm-ci
     provides:
-      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+      - name: srv-api
         properties:
           srv-url: ${default-url}
     requires:
@@ -32,6 +34,7 @@ modules:
     path: gen/db
     parameters:
       buildpack: nodejs_buildpack
+      no-route: true   # optional but clean
     requires:
       - name: Protocap-db
 
@@ -43,12 +46,15 @@ resources:
       service-plan: application
       path: ./xs-security.json
       config:
-        xsappname: age-role-app
+        xsappname: age-role-app-${space}   # ensure uniqueness; adjust as needed
         tenant-mode: dedicated
         oauth2-configuration:
           credential-types:
-            - "binding-secret"
-            - "x509"
+            - binding-secret
+            - x509
+      service-keys:
+        - name: Protocap-auth-KEY
+
   - name: Protocap-db
     type: com.sap.xs.hdi-container
     parameters:
